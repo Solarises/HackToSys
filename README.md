@@ -2,6 +2,7 @@
 # Please Read:
 This project is consider a public domain, but credit is apprechiated. You can use the original project and use it commercially, but editing the project and using it commercially is very prohibited.
 By using this project, You already consent to this rule. Neither, Solarise, Dsplay, MrGoldDev, would taken any responsibility for any damages for  using this project for your benefits.
+If you want to use it commercially, Please contact solarise@privacys.space | We will consider every request.
 
 # Developers: **MrGoldDev**, **Dsplay** and with the help of Siamgame.org
 

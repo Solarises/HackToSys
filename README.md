@@ -1,4 +1,7 @@
 # HackToSys
+# Please Read:
+This project is consider a public domain, but credit is apprechiated. You can use the original project and use it commercially, but editing the project and using it commercially is very prohibited.
+By using this project, You already consent to this rule. Neither, Solarise, Dsplay, MrGoldDev, would taken any responsibility for any damages for  using this project for your benefits.
 # Developers: **MrGoldDev**, **Dsplay**
 
 **HackToSys** is an open-source, interactive game designed to introduce players to the world of ethical hacking. The game simulates real-world penetration testing (pentesting) scenarios, providing hands-on experience in identifying and exploiting system vulnerabilities. HackToSys serves as an educational platform for aspiring white hat hackers (ethical hackers) and anyone interested in learning about system security in a fun, engaging way.

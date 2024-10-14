@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HackToSys</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: black;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+        }
+        
+        #hackText {
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 4em;
+            color: #00ff00;
+            text-shadow: 0 0 20px #00ff00;
+            opacity: 1;
+            transition: opacity 2s ease;
+        }
+    </style>
+</head>
+<body>
+    <div id="hackText">HackToSys</div>
+
+    <script>
+        // Wait for 3 seconds then start fading out
+        setTimeout(function() {
+            document.getElementById('hackText').style.opacity = '0';
+        }, 3000);
+
+        // Redirect after 5 seconds (to allow fade-out effect to complete)
+        setTimeout(function() {
+            window.location.href = 'game_3.html';
+        }, 5000);
+    </script>
+</body>
+</html>

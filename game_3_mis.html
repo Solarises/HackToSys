@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fake Terminal and Web Browser</title>
+    <style>
+        body,
+        html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #1e1e1e;
+            font-family: 'Courier New', Courier, monospace;
+            user-select: none;
+            overflow: hidden;
+        }
+
+        .desktop {
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .window {
+            position: absolute;
+            width: 600px;
+            background-color: #000;
+            border: 2px solid #5c5c5c;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            resize: both;
+            overflow: hidden;
+        }
+
+        .window-header {
+            background-color: #4b4b4b;
+            color: #ffffff;
+            padding: 5px;
+            cursor: move;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .window-controls {
+            display: flex;
+            gap: 5px;
+        }
+
+        .window-controls button {
+            width: 15px;
+            height: 15px;
+            background-color: #ff7d7d;
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+
+        .window-controls button.minimize {
+            background-color: #ffff5d;
+        }
+
+        #terminal {
+            white-space: pre;
+            overflow-y: auto;
+            height: 300px;
+            border-top: 1px solid #4b4b4b;
+            padding: 10px;
+            color: #ebebeb;
+        }
+
+        #input-container {
+            display: flex;
+            align-items: center;
+            padding: 5px;
+        }
+
+        #prefix {
+            color: #6683d4;
+            font-size: 16px;
+            padding-right: 5px;
+        }
+
+        #input {
+            flex-grow: 1;
+            background: #000;
+            color: #ffffff;
+            border: none;
+            outline: none;
+            font-size: 16px;
+            padding: 5px;
+        }
+
+        #web-browser-content {
+            height: 100%;
+            background-color: #ffffff;
+            color: #000;
+            padding: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            font-size: 18px;
+        }
+
+        .unreachable-message {
+            display: none;
+            color: red;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="desktop">
+        <!-- Terminal Window -->
+        <div class="window" id="terminal-window">
+            <div class="window-header" id="terminal-header">
+                <span>Terminal</span>
+                <div class="window-controls">
+                    <button class="minimize"></button>
+                    <button class="close"></button>
+                </div>
+            </div>
+            <div id="terminal"></div>
+            <div id="input-container">
+                <span id="prefix">root@HackToSys:~/home ></span>
+                <input id="input" type="text" autofocus placeholder="Type your command..." />
+            </div>
+        </div>
+
+        <!-- Web Browser Window -->
+        <div class="window" id="web-browser-window" style="left: 650px; top: 0;">
+            <div class="window-header" id="web-browser-header">
+                <span>Web Browser</span>
+                <div class="window-controls">
+                    <button class="minimize"></button>
+                    <button class="close"></button>
+                </div>
+            </div>
+            <div id="web-browser-content">
+                <div id="website-content">
+                    <p>Welcome to <strong>unnxm3.xyz</strong>! This is the homepage of the simulated website.</p>
+                </div>
+                <div class="unreachable-message" id="unreachable-message">
+                    <p>Website unreachable. Please check your connection.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const terminal = document.getElementById('terminal');
+        const input = document.getElementById('input');
+        const terminalWindow = document.getElementById('terminal-window');
+        const windowHeader = document.getElementById('terminal-header');
+        const webBrowserWindow = document.getElementById('web-browser-window');
+        const webBrowserHeader = document.getElementById('web-browser-header');
+        const websiteContent = document.getElementById('website-content');
+        const unreachableMessage = document.getElementById('unreachable-message');
+        let isDraggingTerminal = false;
+        let isDraggingBrowser = false;
+        let offsetX, offsetY;
+
+        // Dragging functionality for terminal
+        windowHeader.addEventListener('mousedown', (e) => {
+            isDraggingTerminal = true;
+            offsetX = e.clientX - terminalWindow.offsetLeft;
+            offsetY = e.clientY - terminalWindow.offsetTop;
+        });
+
+        document.addEventListener('mouseup', () => {
+            isDraggingTerminal = false;
+            isDraggingBrowser = false;
+        });
+
+        document.addEventListener('mousemove', (e) => {
+            if (isDraggingTerminal) {
+                terminalWindow.style.left = `${e.clientX - offsetX}px`;
+                terminalWindow.style.top = `${e.clientY - offsetY}px`;
+            } else if (isDraggingBrowser) {
+                webBrowserWindow.style.left = `${e.clientX - offsetX}px`;
+                webBrowserWindow.style.top = `${e.clientY - offsetY}px`;
+            }
+        });
+
+        // Dragging functionality for web browser
+        webBrowserHeader.addEventListener('mousedown', (e) => {
+            isDraggingBrowser = true;
+            offsetX = e.clientX - webBrowserWindow.offsetLeft;
+            offsetY = e.clientY - webBrowserWindow.offsetTop;
+        });
+
+        // Show welcome message on load
+        function showWelcomeMessage() {
+            const welcomeText = `\
+HackToSys Shell
+Copyright (C) Solarise.lol All rights reserved.
+|| HackToSys has been updated to the latest version ||
+
+Type "help" to see available commands
+`;
+            appendToTerminal(welcomeText);
+        }
+
+        function appendToTerminal(text) {
+            terminal.textContent += text;
+            terminal.scrollTop = terminal.scrollHeight;
+        }
+
+        function handleCommand(command) {
+            const pingOnceRegex = /ping\s+([\w.-]+\.\w+)/;
+            const nmapRegex = /nmap\s+(-p\s+)?([\w.-]+\.\w+)/;
+            const penTestRegex = /PenTest\s+([\w.-]+)/;
+            const lsRegex = /ls/;
+            const mkdirRegex = /mkdir\s+([\w.-]+)/;
+            const touchRegex = /touch\s+([\w.-]+)/;
+            const rmRegex = /rm\s+([\w.-]+)/;
+            const helpRegex = /help/;
+
+            if (pingOnceRegex.test(command)) {
+                const domain = command.match(pingOnceRegex)[1];
+                const time = Math.floor(Math.random() * (250 - 75 + 1)) + 75;
+                ping(domain, time);
+            } else if (nmapRegex.test(command)) {
+                const domain = command.match(nmapRegex)[2];
+                nmap(domain);
+            } else if (lsRegex.test(command)) {
+                listFiles();
+            } else if (mkdirRegex.test(command)) {
+                const dirname = command.match(mkdirRegex)[1];
+                appendToTerminal(`Created directory '${dirname}'\n`);
+            } else if (touchRegex.test(command)) {
+                const filename = command.match(touchRegex)[1];
+                createFile(filename);
+            } else if (rmRegex.test(command)) {
+                const filename = command.match(rmRegex)[1];
+                deleteFile(filename);
+            } else if (penTestRegex.test(command)) {
+                const domain = command.match(penTestRegex)[1];
+                penTest(domain);
+            } else if (helpRegex.test(command)) {
+                showHelp();
+            } else {
+                appendToTerminal(`bash: ${command}: Not found | 403 Forbidden\n`);
+            }
+        }
+
+        function penTest(domain) {
+            appendToTerminal(`\n█████████████████████████████████████████████\n`);
+            appendToTerminal(`█▄─▄▄─█▄─▄▄─█▄─▀█▄─▄█─▄─▄─█▄─▄▄─█─▄▄▄▄█─▄─▄─█\n`);
+            appendToTerminal(`██─▄▄▄██─▄█▀██─█▄▀─████─████─▄█▀█▄▄▄▄─███─███\n`);
+            appendToTerminal(`▀▄▄▄▀▀▀▄▄▄▄▄▀▄▄▄▀▀▄▄▀▀▄▄▄▀▀▄▄▄▄▄▀▄▄▄▄▄▀▀▄▄▄▀▀\n`);
+            appendToTerminal(`Stress to ${domain},\n`);
+
+            let pingResult = Math.random() < 0.5; // Randomly simulate success or failure
+            setTimeout(() => {
+                if (pingResult) {
+                    appendToTerminal(`Connected to ${domain} successfully.\n`);
+                    websiteContent.style.display = "block";
+                    unreachableMessage.style.display = "none";
+                } else {
+                    appendToTerminal(`Unable to connect to ${domain}.\n`);
+                    websiteContent.style.display = "none";
+                    unreachableMessage.style.display = "block";
+                }
+            }, 2000);
+        }
+
+        function showHelp() {
+            appendToTerminal(`Available commands:\n`);
+            appendToTerminal(`ping [domain] - Test connection to domain\n`);
+            appendToTerminal(`nmap [domain] - Network mapping of domain\n`);
+            appendToTerminal(`PenTest [domain] - Penetration test on domain\n`);
+            appendToTerminal(`ls - List files in current directory\n`);
+            appendToTerminal(`mkdir [directory] - Create a new directory\n`);
+            appendToTerminal(`touch [file] - Create a new file\n`);
+            appendToTerminal(`rm [file] - Remove a file\n`);
+            appendToTerminal(`help - Show available commands\n`);
+        }
+
+        function ping(domain, time) {
+            appendToTerminal(`Pinging ${domain}...`);
+            setTimeout(() => {
+                appendToTerminal(`\nReply from ${domain}: bytes=32 time=${time}ms TTL=64\n`);
+            }, time);
+        }
+
+        function nmap(domain) {
+            appendToTerminal(`Scanning ${domain}...`);
+            setTimeout(() => {
+                appendToTerminal(`\nNmap scan report for ${domain}:\n`);
+                appendToTerminal(`Host is up.\n`);
+                appendToTerminal(`Not shown: 999 closed ports\n`);
+            }, 2000);
+        }
+
+        function listFiles() {
+            appendToTerminal(`Documents\nDownloads\nMusic\nPictures\nVideos\n`);
+        }
+
+        function createFile(filename) {
+            appendToTerminal(`Created file '${filename}'\n`);
+        }
+
+        function deleteFile(filename) {
+            appendToTerminal(`Deleted file '${filename}'\n`);
+        }
+
+        // Handling user input
+        input.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') {
+                const command = input.value.trim();
+                if (command) {
+                    appendToTerminal(`\n> ${command}\n`);
+                    handleCommand(command);
+                    input.value = '';
+                }
+            }
+        });
+
+        // Show welcome message on page load
+        showWelcomeMessage();
+    </script>
+</body>
+
+</html>

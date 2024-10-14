@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mission 2 | Denial of Service</title>
+    <style>
+        body {
+            background-color: #000;
+            color: #00ff00;
+            font-family: 'Courier New', Courier, monospace;
+            padding: 20px;
+            overflow: hidden;
+            height: 100vh;
+        }
+        #terminal {
+            white-space: pre;
+            overflow-y: scroll;
+            height: 85%;
+            border: 1px solid #00ff00;
+            padding: 10px;
+            margin-bottom: 10px;
+        }
+        #input-container {
+            display: flex;
+            align-items: center;
+        }
+        #prefix {
+            color: #00ff00;
+            font-size: 16px;
+            padding-right: 5px;
+        }
+        #input {
+            flex-grow: 1;
+            background: #000;
+            color: #00ff00;
+            border: none;
+            outline: none;
+            font-size: 16px;
+            padding: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div id="terminal"></div>
+
+    <div id="input-container">
+        <span id="prefix">root@HackToSys:~/home ></span>
+        <input id="input" type="text" autofocus placeholder="Type your command..." />
+    </div>
+
+    <script>
+        // Function to check if the user is on a mobile device
+
+
+        const terminal = document.getElementById('terminal');
+        const input = document.getElementById('input');
+        const files = []; // Array to hold files
+        const currentDirectory = 'home'; // Current directory
+
+        // Show welcome message on load
+        function showWelcomeMessage() {
+            const welcomeText = `
+HackToSys Shell
+Copyright (C) Solarise.lol All rights reserved.
+|| HackToSys has been updated to the latest version ||
+
+Type "help" to see available commands
+`;
+            appendToTerminal(welcomeText);
+        }
+
+        function appendToTerminal(text) {
+            terminal.textContent += text;
+            terminal.scrollTop = terminal.scrollHeight;
+        }
+
+        function listFiles() {
+            if (files.length === 0) {
+                appendToTerminal('No files found.\n');
+            } else {
+                appendToTerminal(files.join('\n') + '\n');
+            }
+        }
+
+        function createFile(filename) {
+            if (files.includes(filename)) {
+                appendToTerminal(`bash: ${filename}: File exists\n`);
+            } else {
+                files.push(filename);
+                appendToTerminal(`Created file '${filename}'\n`);
+            }
+        }
+
+        function deleteFile(filename) {
+            const index = files.indexOf(filename);
+            if (index > -1) {
+                files.splice(index, 1);
+                appendToTerminal(`Deleted file '${filename}'\n`);
+            } else {
+                appendToTerminal(`bash: ${filename}: No such file\n`);
+            }
+        }
+
+        function penTest(domain) {
+            appendToTerminal(`\n█████████████████████████████████████████████
+█▄─▄▄─█▄─▄▄─█▄─▀█▄─▄█─▄─▄─█▄─▄▄─█─▄▄▄▄█─▄─▄─█
+██─▄▄▄██─▄█▀██─█▄▀─████─████─▄█▀█▄▄▄▄─███─███
+▀▄▄▄▀▀▀▄▄▄▄▄▀▄▄▄▀▀▄▄▀▀▄▄▄▀▀▄▄▄▄▄▀▄▄▄▄▄▀▀▄▄▄▀▀
+Stress to ${domain},\n`);
+
+            let pingTime = 0;
+            const intervalId = setInterval(() => {
+                pingTime += 150;
+                ping(domain, pingTime);
+                if (pingTime >= 1250) {
+                    clearInterval(intervalId);
+                    appendToTerminal(`Mission success: Ping reached ${pingTime} ms.\n`);
+                    window.location.href="hacktosys_3.html"
+                }
+            }, 1000);
+        }
+
+        function handleCommand(command) {
+            const pingOnceRegex = /ping\s+([\w.-]+\.\w+)/;
+            const nmapRegex = /nmap\s+(-p\s+)?([\w.-]+\.\w+)/;
+            const helpRegex = /help/;
+            const penTestRegex = /PenTest\s+([\w.-]+)/;
+            const lsRegex = /ls/;
+            const mkdirRegex = /mkdir\s+([\w.-]+)/;
+            const touchRegex = /touch\s+([\w.-]+)/;
+            const rmRegex = /rm\s+([\w.-]+)/;
+
+            if (pingOnceRegex.test(command)) {
+                const domain = command.match(pingOnceRegex)[1];
+                const time = Math.floor(Math.random() * (250 - 75 + 1)) + 75;
+                ping(domain, time);
+            } else if (nmapRegex.test(command)) {
+                const domain = command.match(nmapRegex)[2];
+                nmap(domain);
+            } else if (lsRegex.test(command)) {
+                listFiles();
+            } else if (mkdirRegex.test(command)) {
+                const dirname = command.match(mkdirRegex)[1];
+                appendToTerminal(`Created directory '${dirname}'\n`);
+            } else if (touchRegex.test(command)) {
+                const filename = command.match(touchRegex)[1];
+                createFile(filename);
+            } else if (rmRegex.test(command)) {
+                const filename = command.match(rmRegex)[1];
+                deleteFile(filename);
+            } else if (penTestRegex.test(command)) {
+                const domain = command.match(penTestRegex)[1];
+                penTest(domain);
+            } else if (helpRegex.test(command)) {
+                showHelp();
+            } else {
+                appendToTerminal(`bash: ${command}: Not found | 403 Forbidden\n`);
+            }
+        }
+
+        function ping(domain, time) {
+            const response = `Pinging ${domain} with 32 bytes of data:\nReply from ${domain}: bytes=32 time=${time}ms\n`;
+            appendToTerminal(response);
+        }
+
+        function showHelp() {
+            const helpText = `
+HackToSys | UNNXM3 Server
+help - Show this page
+nmap (-p,-sV Optional) *.{website}/*
+ping *.{website}/*
+PenTest {website} - Denial Service
+ls - List files in the current directory
+mkdir {directory name} - Create a new directory
+touch {filename} - Create a new file
+rm {filename} - Delete a file
+`;
+            appendToTerminal(helpText);
+        }
+
+        input.addEventListener('keydown', function(event) {
+            if (event.key === 'Enter') {
+                const command = input.value.trim();
+                if (command) {
+                    appendToTerminal(`> ${command}\n`);
+                    handleCommand(command);
+                    input.value = '';
+                }
+            }
+        });
+
+        // Show welcome message on page load
+        showWelcomeMessage();
+    </script>
+</body>
+</html>

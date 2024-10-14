@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Multiplayer Disabled</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: black;
+            color: #00ff00; /* Bright green */
+            font-family: 'Courier New', Courier, monospace;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 4em;
+            text-shadow: 0 0 10px #00ff00, 0 0 20px #00ff00, 0 0 30px #00ff00;
+            opacity: 0; /* Initially hidden for fade-in */
+            transition: opacity 2s ease-in; /* Fade-in effect */
+        }
+
+        p {
+            font-size: 1.5em;
+            margin: 20px;
+            text-shadow: 0 0 5px #00ff00;
+            opacity: 0; /* Initially hidden for fade-in */
+            transition: opacity 2s ease-in 1s; /* Fade-in effect with delay */
+        }
+    </style>
+</head>
+<body>
+    <h1 id="title">Multiplayer</h1>
+    <p id="description">This mode is currently in development.<br>This may be implemented or rejected from being added.</p>
+    
+    <script>
+        window.onload = function() {
+            // Fade in title and description
+            const title = document.getElementById('title');
+            const description = document.getElementById('description');
+            title.style.opacity = 1; // Fade in the title
+            description.style.opacity = 1; // Fade in the description
+        };
+    </script>
+</body>
+</html>

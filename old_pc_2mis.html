@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mission 2 - Network</title>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            background: url('hacktosys.png') no-repeat center center fixed;
+            font-family: 'Courier New', Courier, monospace;
+            user-select: none;
+            overflow: hidden;
+        }
+
+        /* Desktop environment */
+        .desktop {
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* Terminal window styles */
+        .window {
+            position: absolute;
+            width: 600px;
+            background-color: #000;
+            border: 2px solid #5c5c5c;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            resize: both;
+            overflow: hidden;
+        }
+
+        .window-header {
+            background-color: #4b4b4b;
+            color: #ffffff;
+            padding: 5px;
+            cursor: move;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .window-controls {
+            display: flex;
+            gap: 5px;
+        }
+
+        .window-controls button {
+            width: 15px;
+            height: 15px;
+            background-color: #ff7d7d;
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+
+        .window-controls button.minimize {
+            background-color: #ffff5d;
+        }
+
+        #terminal {
+            white-space: pre;
+            overflow-y: auto;
+            height: 300px;
+            border-top: 1px solid #4b4b4b;
+            padding: 10px;
+            color: #ebebeb;
+        }
+
+        #input-container {
+            display: flex;
+            align-items: center;
+            padding: 5px;
+        }
+
+        #prefix {
+            color: #6683d4;
+            font-size: 16px;
+            padding-right: 5px;
+        }
+
+        #input {
+            flex-grow: 1;
+            background: #000;
+            color: #ffffff;
+            border: none;
+            outline: none;
+            font-size: 16px;
+            padding: 5px;
+        }
+
+        /* Fade to black animation */
+        .fade-out {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: black;
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
+            z-index: 9999;
+            display: none;
+        }
+
+        /* HackToSys message */
+        .fade-out.active {
+            display: block;
+            opacity: 1;
+        }
+
+        .hacktosys-message {
+            position: absolute;
+            color: #00ff00;
+            font-size: 48px;
+            font-family: 'Courier New', Courier, monospace;
+            text-shadow: 0 0 10px #00ff00;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="desktop">
+        <div class="window" id="terminal-window">
+            <div class="window-header" id="window-header">
+                <span>Terminal</span>
+                <div class="window-controls">
+                    <button class="minimize"></button>
+                    <button class="close"></button>
+                </div>
+            </div>
+            <div id="terminal"></div>
+            <div id="input-container">
+                <span id="prefix">root@HackToSys:~/home ></span>
+                <input id="input" type="text" autofocus placeholder="Type your command..." />
+            </div>
+        </div>
+    </div>
+
+    <!-- Fade out overlay -->
+    <div class="fade-out" id="fade-out">
+        <div class="hacktosys-message">Mission Complete | HackToSys</div>
+    </div>
+
+    <script>
+        const terminal = document.getElementById('terminal');
+        const input = document.getElementById('input');
+        const files = []; // Array to hold files
+        const currentDirectory = 'home'; // Current directory
+        const fadeOut = document.getElementById('fade-out');
+
+        // Show welcome message on load
+        function showWelcomeMessage() {
+            const welcomeText = `
+HackToSys Shell
+Copyright (C) Solarise.lol All rights reserved.
+|| HackToSys has been updated to the latest version ||
+
+Type "help" to see available commands
+`;
+            appendToTerminal(welcomeText);
+        }
+
+        function appendToTerminal(text) {
+            terminal.textContent += text;
+            terminal.scrollTop = terminal.scrollHeight;
+        }
+
+        function penTest(domain) {
+            appendToTerminal(`\n█████████████████████████████████████████████
+█▄─▄▄─█▄─▄▄─█▄─▀█▄─▄█─▄─▄─█▄─▄▄─█─▄▄▄▄█─▄─▄─█
+██─▄▄▄██─▄█▀██─█▄▀─████─████─▄█▀█▄▄▄▄─███─███
+▀▄▄▄▀▀▀▄▄▄▄▄▀▄▄▄▀▀▄▄▀▀▄▄▄▀▀▄▄▄▄▄▀▄▄▄▄▄▀▀▄▄▄▀▀
+Stress to ${domain},\n`);
+
+            let pingTime = 0;
+            const intervalId = setInterval(() => {
+                pingTime += 150;
+                ping(domain, pingTime);
+                if (pingTime >= 1250) {
+                    clearInterval(intervalId);
+                    appendToTerminal(`Mission success: Ping reached ${pingTime} ms.\n`);
+                    fadeToBlack();
+                }
+            }, 1000);
+        }
+
+        function ping(domain, time) {
+            const response = `Pinging ${domain} with 32 bytes of data:\nReply from ${domain}: bytes=32 time=${time}ms\n`;
+            appendToTerminal(response);
+        }
+
+        function fadeToBlack() {
+            fadeOut.classList.add('active');
+            setTimeout(() => {
+                window.location.href = 'game_3.html'; // Redirect after 3 seconds
+            }, 3000);
+        }
+
+        input.addEventListener('keydown', function(event) {
+            if (event.key === 'Enter') {
+                const command = input.value.trim();
+                if (command) {
+                    appendToTerminal(`> ${command}\n`);
+                    if (command.startsWith('PenTest')) {
+                        const domain = command.split(' ')[1];
+                        penTest(domain);
+                    }
+                    input.value = '';
+                }
+            }
+        });
+
+        showWelcomeMessage();
+    </script>
+</body>
+</html>

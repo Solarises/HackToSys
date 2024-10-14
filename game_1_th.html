@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Prompt:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+<style>
+.prompt-thin {
+  font-family: "Prompt", sans-serif;
+  font-weight: 100;
+  font-style: normal;
+}
+
+.prompt-extralight {
+  font-family: "Prompt", sans-serif;
+  font-weight: 200;
+  font-style: normal;
+}
+
+.prompt-light {
+  font-family: "Prompt", sans-serif;
+  font-weight: 300;
+  font-style: normal;
+}
+
+.prompt-regular {
+  font-family: "Prompt", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.prompt-medium {
+  font-family: "Prompt", sans-serif;
+  font-weight: 500;
+  font-style: normal;
+}
+
+.prompt-semibold {
+  font-family: "Prompt", sans-serif;
+  font-weight: 600;
+  font-style: normal;
+}
+
+.prompt-bold {
+  font-family: "Prompt", sans-serif;
+  font-weight: 700;
+  font-style: normal;
+}
+
+.prompt-extrabold {
+  font-family: "Prompt", sans-serif;
+  font-weight: 800;
+  font-style: normal;
+}
+
+.prompt-black {
+  font-family: "Prompt", sans-serif;
+  font-weight: 900;
+  font-style: normal;
+}
+
+.prompt-thin-italic {
+  font-family: "Prompt", sans-serif;
+  font-weight: 100;
+  font-style: italic;
+}
+
+.prompt-extralight-italic {
+  font-family: "Prompt", sans-serif;
+  font-weight: 200;
+  font-style: italic;
+}
+
+.prompt-light-italic {
+  font-family: "Prompt", sans-serif;
+  font-weight: 300;
+  font-style: italic;
+}
+
+.prompt-regular-italic {
+  font-family: "Prompt", sans-serif;
+  font-weight: 400;
+  font-style: italic;
+}
+
+.prompt-medium-italic {
+  font-family: "Prompt", sans-serif;
+  font-weight: 500;
+  font-style: italic;
+}
+
+.prompt-semibold-italic {
+  font-family: "Prompt", sans-serif;
+  font-weight: 600;
+  font-style: italic;
+}
+
+.prompt-bold-italic {
+  font-family: "Prompt", sans-serif;
+  font-weight: 700;
+  font-style: italic;
+}
+
+.prompt-extrabold-italic {
+  font-family: "Prompt", sans-serif;
+  font-weight: 800;
+  font-style: italic;
+}
+
+.prompt-black-italic {
+  font-family: "Prompt", sans-serif;
+  font-weight: 900;
+  font-style: italic;
+}
+</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>หน้าเข้าสู่ระบบ</title>
+    <script>
+        alert("HackToSys | ภารกิจนี้เป็นการจำลองการโจมตี SQL Injection แบบ 1=1 เท่านั้น.")
+    </script>
+    <style>
+        body {
+            background: black; /* ฉากหลังสีดำ */
+            font-family: 'Prompt', sans-serif;
+            color: #00ff00; /* ข้อความสีเขียวสว่าง */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .login-box {
+            background: #222D32;
+            text-align: center;
+            box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+            padding: 20px;
+            border-radius: 8px;
+            border: 2px solid #00ff00; /* ขอบสีเขียว */
+            position: relative;
+        }
+
+        .login-key {
+            font-size: 80px;
+            line-height: 100px;
+            background: -webkit-linear-gradient(#27EF9F, #0DB8DE);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 20px;
+        }
+
+        .login-title {
+            font-size: 30px;
+            font-weight: bold;
+            margin: 10px 0;
+        }
+
+        .form-group {
+            margin: 20px 0;
+        }
+
+        input[type=text], input[type=password] {
+            background-color: #222D32;
+            border: 2px solid #00ff00; /* ขอบสีเขียว */
+            border-radius: 5px;
+            color: #ECF0F5;
+            padding: 10px;
+            width: 100%;
+            transition: border-color 0.3s;
+        }
+
+        input[type=text]:focus, input[type=password]:focus {
+            border-color: #0DB8DE; /* สีน้ำเงินสว่างเมื่อโฟกัส */
+            outline: none;
+        }
+
+        .btn-outline-primary {
+            border-color: #0DB8DE;
+            color: #0DB8DE;
+            border-radius: 5px;
+            padding: 10px;
+            width: 100%;
+            font-weight: bold;
+            letter-spacing: 1px;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .btn-outline-primary:hover {
+            background-color: #0DB8DE;
+            color: black; /* เปลี่ยนสีข้อความเมื่อเลื่อนเมาส์ */
+        }
+
+        .message {
+            margin-top: 20px;
+            color: #ECF0F5;
+        }
+
+        .title-screen {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            color: #00ff00; /* สีเขียวสำหรับชื่อ */
+            font-size: 80px;
+            text-align: center;
+            transition: opacity 1s;
+        }
+
+        .loading {
+            font-size: 30px;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-box">
+        <div class="login-key">
+            <i class="fa fa-key" aria-hidden="true"></i>
+        </div>
+        <div class="login-title">แผงควบคุมผู้ดูแลระบบ</div>
+        <button onclick="alert('คำใบ้: ระบบนี้จำลองการโจมตี SQL ด้วย ` และ 1=1 เพื่อสร้างภาพลวงตา.')">คลิกที่นี่เพื่อดูคำใบ้</button>
+        <form id="loginForm">
+            <div class="form-group">
+                <label class="form-control-label">ชื่อผู้ใช้</label>
+                <input type="text" class="form-control" id="username" placeholder="กรุณาใส่ชื่อผู้ใช้ของคุณ">
+            </div>
+            <div class="form-group">
+                <label class="form-control-label">รหัสผ่าน</label>
+                <input type="password" class="form-control" id="password" placeholder="กรุณาใส่รหัสผ่านของคุณ">
+            </div>
+            <div class="form-group">
+                <button type="submit" class="btn btn-outline-primary">เข้าสู่ระบบ</button>
+            </div>
+            <div class="message" id="message"></div>
+        </form>
+    </div>
+
+    <div class="title-screen" id="titleScreen">
+        <div class="login-title">HackToSys</div>
+    </div>
+
+    <script>
+        document.getElementById('loginForm').onsubmit = function(event) {
+            event.preventDefault(); // ป้องกันการส่งฟอร์ม
+
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            const messageElement = document.getElementById('message');
+
+            // ตรวจสอบการโจมตี SQL
+            if (username.includes("' OR '1'='1' --") || password.includes("' OR '1'='1' --")) {
+                messageElement.textContent = "เข้าถึงได้: SQL Injection สำเร็จ!";
+                messageElement.style.color = "#00FF00"; // สีเขียวสว่างสำหรับความสำเร็จ
+
+                setTimeout(() => {
+                    document.body.style.backgroundColor = "black";
+                    document.querySelector('.login-box').style.display = "none";
+                    const titleScreen = document.getElementById('titleScreen');
+                    titleScreen.style.display = "flex";
+                    titleScreen.style.opacity = 1;
+
+                    setTimeout(() => {
+                        titleScreen.style.opacity = 0; // จางหาย
+                        setTimeout(() => {
+                            window.location.href = "game_2_th.html"; // เปลี่ยนเส้นทางหลังจากจางหาย
+                        }, 1000);
+                    }, 2000); // แสดงชื่อเป็นเวลา 2 วินาที
+                }, 5000); // รอ 5 วินาที
+            } else {
+                messageElement.textContent = "เข้าถึงถูกปฏิเสธ: ข้อมูลประจำตัวไม่ถูกต้อง.";
+                messageElement.style.color = "#FF0000"; // สีแดงสำหรับความล้มเหลว
+            }
+        };
+    </script>
+</body>
+</html>

@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Loading...</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: black;
+            color: #00ff00; /* Bright green */
+            font-family: 'Courier New', Courier, monospace;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            font-size: 2em;
+            text-align: center;
+        }
+
+        .glow {
+            text-shadow: 0 0 10px #00ff00, 0 0 20px #00ff00, 0 0 30px #00ff00;
+        }
+    </style>
+</head>
+<body>
+    <div id="text" class="glow">Loading.</div>
+    <script>
+        const texts = ["Loading.", "Loading..", "Loading..."];
+        let index = 0;
+
+        // Typewriter effect function
+        function typewriterEffect() {
+            const textElement = document.getElementById('text');
+            textElement.textContent = texts[index];
+            index = (index + 1) % texts.length; // Loop through texts
+        }
+
+        // Set interval for loading text
+        const interval = setInterval(typewriterEffect, 500); // Change text every 500ms
+
+        // After 3 seconds, stop loading and show the story
+        setTimeout(() => {
+            clearInterval(interval);
+            showStory();
+        }, 3000); // 3 seconds
+    </script>
+
+    <script>
+        function showStory() {
+            const textElement = document.getElementById('text');
+            textElement.innerHTML = ""; // Clear loading text
+
+            const story = [
+                "Mission 2: Denial of Service",
+                "HackToSys to you: There's a new job that offer very high price.",
+                "HackToSys to you: It's about getting a website down.",
+                "You to HackToSys: What website is it?",
+                "HackToSys to you: It's unnxm3.xyz",
+                "You to HackToSys: I got you boss."
+            ];
+
+            let storyIndex = 0;
+
+            function typewriterDisplay(line, callback) {
+                let i = 0;
+                textElement.textContent = ""; // Clear text before typing
+                const typeInterval = setInterval(() => {
+                    if (i < line.length) {
+                        textElement.textContent += line.charAt(i);
+                        i++;
+                    } else {
+                        clearInterval(typeInterval);
+                        setTimeout(callback, 3000); // Wait for 3 seconds before calling the callback
+                    }
+                }, 100); // Typing speed
+            }
+
+            function displayNextLine() {
+                if (storyIndex < story.length) {
+                    typewriterDisplay(story[storyIndex], () => {
+                        storyIndex++;
+                        displayNextLine(); // Show the next line
+                    });
+                } else {
+                    // Redirect to game_1.html after the last line
+                    setTimeout(() => {
+                        window.location.href = 'game2_mis.html'; // Redirect to game_1.html
+                    }, 1000); // Wait 1 second before redirecting
+                }
+            }
+
+            displayNextLine(); // Start displaying the story
+        }
+    </script>
+    
+</body>
+</html>

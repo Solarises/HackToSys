@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HackToSys</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: black;
+            color: #00ff00; /* Bright green */
+            font-family: 'Courier New', Courier, monospace;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            position: relative;
+        }
+
+        .container {
+            text-align: center;
+        }
+
+        #title {
+            font-size: 4em;
+            text-shadow: 0 0 10px #00ff00, 0 0 20px #00ff00, 0 0 30px #00ff00;
+            opacity: 0; /* Initially hidden for fade-in */
+            transition: opacity 2s ease-in;
+        }
+
+        .button {
+            margin: 10px; /* Reduced margin for closer positioning */
+            padding: 15px 30px;
+            font-size: 1.5em;
+            color: #00ff00;
+            background-color: black;
+            border: 2px solid #00ff00;
+            border-radius: 5px;
+            cursor: pointer;
+            opacity: 0; /* Initially hidden for fade-in */
+            transition: opacity 1s ease-in, box-shadow 0.3s ease;
+            text-shadow: 0 0 5px #00ff00; /* Green glow */
+        }
+
+        .button:hover {
+            background-color: #00ff00;
+            color: black;
+            box-shadow: 0 0 15px #00ff00, 0 0 30px #00ff00; /* Glowing effect on hover */
+        }
+
+        .language-options {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            font-size: 1em;
+        }
+
+        .language-options a {
+            color: #00ff00;
+            margin-left: 10px;
+            text-decoration: none;
+        }
+
+        .language-options a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 id="title">HackToSys</h1>
+        <button class="button" id="playButton">Play</button>
+        <button class="button" id="multiplayerButton">Multiplayer</button>
+    </div>
+    <div class="language-options">
+        <span>Language:</span>
+        <a href="play_cutscene_th.html">Thai</a>
+        <a href="play_cutscene.html">English</a>
+    </div>
+    <script>
+        window.onload = function() {
+            const title = document.getElementById('title');
+            title.style.opacity = 1; // Fade in the title
+            
+            setTimeout(() => {
+                const buttons = document.querySelectorAll('.button');
+                buttons.forEach(button => {
+                    button.style.opacity = 1; // Fade in the buttons
+                });
+            }, 1000); // Fade in buttons after 1 second
+        };
+
+        // Add event listeners for button clicks
+        document.getElementById('playButton').onclick = function() {
+            window.location.href = 'play_cutscene.html'; // Redirect to play_cutscene.html
+        };
+
+        document.getElementById('multiplayerButton').onclick = function() {
+            window.location.href = 'multiplayer_disabled.html'; // Redirect to multiplayer_disabled.html
+        };
+    </script>
+</body>
+</html>
